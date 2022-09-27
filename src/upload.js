@@ -26,8 +26,8 @@ module.exports.handler = async (event) => {
             Key: `images/${new Date().toISOString()}.mp4`,
             Body: content,
             ContentType: contentType,
-            ACL: "public-read",
-            ContentDisposition: `attachment; filename="${filename}";`,
+            // ACL: "public-read",
+            ContentDisposition: `attachment; filename="${filename}";`
         };
 
         const uploadResult = await s3.upload(params).promise();
