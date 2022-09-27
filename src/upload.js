@@ -20,11 +20,14 @@ module.exports.handler = async (event) => {
         // const parsedBody = JSON.parse(event.body);
         // const base64File = parsedBody.file;
         // const decodedFile = Buffer.from(base64File.replace(/^data:image\/\w+;base64,/, ""), "base64");
+        const { content, filename, contentType } = result.files[0];
         const params = {
             Bucket: BUCKET_NAME,
             Key: `images/${new Date().toISOString()}.mp4`,
-            Body: result.files[0],
-            ContentType: "multipart/form-data",
+            Body: content,
+            ContentType: contentType,
+            ACL: "public-read",
+            ContentDisposition: `attachment; filename="${filename}";`,
         };
 
         const uploadResult = await s3.upload(params).promise();
