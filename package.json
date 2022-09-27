@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "aws-sdk": "^2.1223.0"
+    "aws-sdk": "^2.1223.0",
+    "lambda-multipart-parser": "^1.0.1"
   },
   "devDependencies": {
     "serverless-iam-roles-per-function": "^3.2.0"

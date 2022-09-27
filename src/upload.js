@@ -1,6 +1,7 @@
 
 const AWS = require("aws-sdk");
 const s3 = new AWS.S3();
+const parser = require('lambda-multipart-parser');
 
 const BUCKET_NAME = process.env.FILE_UPLOAD_BUCKET_NAME;
 
@@ -14,14 +15,16 @@ module.exports.handler = async (event) => {
     };
 
     try {
-        const parsedBody = JSON.parse(event.body);
-        const base64File = parsedBody.file;
-        const decodedFile = Buffer.from(base64File.replace(/^data:image\/\w+;base64,/, ""), "base64");
+        const result = await parser.parse(event);
+        console.log(result)
+        // const parsedBody = JSON.parse(event.body);
+        // const base64File = parsedBody.file;
+        // const decodedFile = Buffer.from(base64File.replace(/^data:image\/\w+;base64,/, ""), "base64");
         const params = {
             Bucket: BUCKET_NAME,
             Key: `images/${new Date().toISOString()}.mp4`,
-            Body: decodedFile,
-            ContentType: "video/mp4",
+            Body: result,
+            ContentType: "multipart/form-data",
         };
 
         const uploadResult = await s3.upload(params).promise();
