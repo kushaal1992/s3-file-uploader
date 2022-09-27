@@ -23,7 +23,7 @@ module.exports.handler = async (event) => {
         const params = {
             Bucket: BUCKET_NAME,
             Key: `images/${new Date().toISOString()}.mp4`,
-            Body: result.files,
+            Body: result.files[0],
             ContentType: "multipart/form-data",
         };
 
