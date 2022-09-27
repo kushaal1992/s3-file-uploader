@@ -15,7 +15,7 @@ module.exports.handler = async (event) => {
     };
 
     try {
-        const result = await parser.parse(event.file);
+        const result = await parser.parse(event);
         console.log('result-->', result)
         // const parsedBody = JSON.parse(event.body);
         // const base64File = parsedBody.file;
