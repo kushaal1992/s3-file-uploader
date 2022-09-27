@@ -15,8 +15,8 @@ module.exports.handler = async (event) => {
     };
 
     try {
-        const result = await parser.parse(event);
-        console.log(result)
+        const result = await parser.parse(event.file);
+        console.log('result-->', result)
         // const parsedBody = JSON.parse(event.body);
         // const base64File = parsedBody.file;
         // const decodedFile = Buffer.from(base64File.replace(/^data:image\/\w+;base64,/, ""), "base64");
@@ -29,6 +29,8 @@ module.exports.handler = async (event) => {
             // ACL: "public-read",
             ContentDisposition: `attachment; filename="${filename}";`
         };
+        let url = await getSignedUrl(params)
+        console.log(url)
 
         const uploadResult = await s3.upload(params).promise();
 
